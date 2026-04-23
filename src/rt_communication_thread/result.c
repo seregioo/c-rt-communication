@@ -32,30 +32,34 @@ rt_communication_result_t *rt_communication_thread_result_create(
     rt_communication_thread_t *result_value,
     rt_communication_result_callback_string_function_t
         rt_result_callback_funct) {
-  // TODO: Implement this function
+  return rt_communication_result_create(result_type, sub_type, result_value,
+                                        rt_result_callback_funct);
 }
 
 void rt_communication_thread_result_destroy(
     rt_communication_result_t *rt_result) {
-  // TODO: Implement this function
+  rt_communication_result_destroy(rt_result);
 }
 
 rt_communication_result_type_t
 rt_communication_thread_get_type(rt_communication_result_t *rt_result) {
-  // TODO: Implement this function
+  return rt_communication_result_get_type(rt_result);
 }
 
 rt_communication_thread_result_type_t
 rt_communication_thread_get_subtype(rt_communication_result_t *rt_result) {
-  // TODO: Implement this function
+  return (rt_communication_thread_result_type_t)
+      rt_communication_result_get_subtype(rt_result);
 }
 
 rt_communication_thread_t *
 rt_communication_thread_get_value(rt_communication_result_t *rt_result) {
-  // TODO: Implement this function
+  return (rt_communication_thread_t *)rt_communication_result_get_value(
+      rt_result);
 }
 
 const char *rt_communication_thread_result_get_string(
     rt_communication_result_t *rt_result) {
-  // TODO: Implement this function
+  return rt_communication_thread_result_messages
+      [rt_communication_thread_get_subtype(rt_result)];
 }
