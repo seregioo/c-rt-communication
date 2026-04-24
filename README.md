@@ -22,3 +22,11 @@ cp build/compile_commands.json .
 ```bash
 sudo setcap cap_sys_nice=ep build/c_rt_comunication
 ```
+
+## TODO
+
+- [ ] Create tests for result
+- [ ] Create tests for rt thead
+- [ ] Implement comedi wrapper
+- [ ] Implement hr model
+- [ ] Implement main file
