@@ -65,6 +65,16 @@ endif()
 
 target_include_directories(rt_thread PUBLIC include/)
 
+##########
+# RT DAQ #
+##########
+
+add_library(rt_daq
+            STATIC src/rt_daq/result.c
+                   src/rt_daq/port/result.c)
+
+target_include_directories(rt_daq PUBLIC include/)
+
 #############
 #   Main    #
 #############
