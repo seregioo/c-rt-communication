@@ -72,7 +72,8 @@ target_include_directories(rt_thread PUBLIC include/)
 add_library(rt_daq
             STATIC src/rt_daq/result.c
                    src/rt_daq/port/result.c
-                   src/rt_daq/port.c)
+                   src/rt_daq/port.c
+                   src/rt_daq/daq.c)
 
 target_include_directories(rt_daq PUBLIC include/)
 
@@ -87,15 +88,13 @@ target_link_libraries(c_rt_comunication
 
 target_link_libraries(c_rt_comunication 
                       PUBLIC rt_thread)
-                  
+
+target_link_libraries(c_rt_comunication 
+                      PUBLIC rt_daq)
+
 target_sources(c_rt_comunication
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/main.c
-)
-
-target_link_libraries(c_rt_comunication
-    PRIVATE
-        rt_result
 )
 
 ################
