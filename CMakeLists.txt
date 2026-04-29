@@ -5,9 +5,17 @@ project(c_rt_comunication
     DESCRIPTION "RealTime communication c project"
     LANGUAGES C CXX)
 
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    set(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING "Build type" FORCE)
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
+                 Debug Release RelWithDebInfo MinSizeRel)
+endif()
+
 #####################
 #   Dependencies    #
 #####################
+include(FetchContent)
+find_package(Threads REQUIRED)
 
 
 ##################
@@ -29,7 +37,31 @@ target_include_directories(rt_result
 #############
 
 add_library(rt_thread
-            STATIC ${CMAKE_CURRENT_SOURCE_DIR}/src/rt_thread/result.c)
+            STATIC ${CMAKE_CURRENT_SOURCE_DIR}/src/rt_thread/result.c
+                   ${CMAKE_CURRENT_SOURCE_DIR}/src/rt_thread/thread.c)
+
+set(RT_BACKEND "POSIX" CACHE STRING "RT backend")
+set_property(CACHE RT_BACKEND PROPERTY STRINGS POSIX PREEMPT_RT XENOMAI)
+
+if(RT_BACKEND STREQUAL "POSIX")
+    target_sources(rt_thread PRIVATE
+        src/rt_thread/core/posix.c)
+    target_compile_definitions(rt_thread PRIVATE POSIX_BACKEND)
+    target_link_libraries(rt_thread PUBLIC Threads::Threads)
+elseif(RT_BACKEND STREQUAL "PREEMPT_RT")
+    target_sources(rt_thread PRIVATE
+        src/rt_thread/core/preempt_rt.c)
+    target_compile_definitions(rt_thread PRIVATE PREEMPT_RT_BACKEND)
+    target_link_libraries(rt_thread PUBLIC Threads::Threads)
+    target_compile_options(rt_thread PRIVATE
+        $<$<NOT:$<CONFIG:Debug>>:-O2>)
+elseif(RT_BACKEND STREQUAL "XENOMAI")
+    target_sources(rt_thread PRIVATE
+        src/rt_thread/core/xenomai.c)
+    target_compile_definitions(rt_thread PRIVATE XENOMAI_BACKEND)
+else()
+    message(FATAL_ERROR "Invalid RT_BACKEND")
+endif()
 
 target_include_directories(rt_thread PUBLIC include/)
 
