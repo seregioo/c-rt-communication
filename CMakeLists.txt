@@ -75,6 +75,19 @@ add_library(rt_daq
                    src/rt_daq/port.c
                    src/rt_daq/daq.c)
 
+set(RT_DAQ_DRIVER "COMEDI" CACHE STRING "RT DAQ Driver")
+set_property(CACHE RT_DAQ_DRIVER PROPERTY STRINGS COMEDI)
+
+if(RT_DAQ_DRIVER STREQUAL "COMEDI")
+    find_library(COMEDI_LIBRARY NAMES comedi REQUIRED)
+    target_sources(rt_daq PRIVATE
+        src/rt_daq/driver/comedi.c)
+    target_compile_definitions(rt_daq PRIVATE COMEDI_DRIVER)
+    target_link_libraries(rt_daq PUBLIC ${COMEDI_LIBRARY})
+else()
+    message(FATAL_ERROR "Invalid RT_DAQ_DRIVER")
+endif()
+
 target_include_directories(rt_daq PUBLIC include/)
 
 #############
