@@ -17,7 +17,6 @@ endif()
 include(FetchContent)
 find_package(Threads REQUIRED)
 
-
 ##################
 #   RT Result    #
 ##################
