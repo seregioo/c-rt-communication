@@ -71,7 +71,8 @@ target_include_directories(rt_thread PUBLIC include/)
 
 add_library(rt_daq
             STATIC src/rt_daq/result.c
-                   src/rt_daq/port/result.c)
+                   src/rt_daq/port/result.c
+                   src/rt_daq/port.c)
 
 target_include_directories(rt_daq PUBLIC include/)
 
