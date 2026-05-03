@@ -10,6 +10,11 @@
 #include "rt_thread/core.h"
 #include <pthread.h>
 
+static void rt_thread_timespec_from_ns(uint64_t time_ns, struct timespec *ts) {
+  ts->tv_sec = time_ns / 1000000000ull;
+  ts->tv_nsec = time_ns % 1000000000ull;
+}
+
 rt_result_t rt_thread_core_create(rt_thread_t *rt_thread,
                                   rt_thread_attrs_t *rt_attrs) {
   // TODO: Implement this function
