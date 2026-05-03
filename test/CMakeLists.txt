@@ -20,6 +20,21 @@ target_link_libraries(rt_result_test
         GTest::gtest_main
 )
 
+###########
+# RT SPSC #
+###########
+
+add_executable(rt_spsc_test
+    rt_spsc_test.cpp
+)
+
+target_link_libraries(rt_spsc_test
+    PRIVATE
+        rt_spsc
+        GTest::gtest_main
+)
+
 include(GoogleTest)
 
 gtest_discover_tests(rt_result_test)
+gtest_discover_tests(rt_spsc_test)

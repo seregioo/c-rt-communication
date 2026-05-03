@@ -90,6 +90,17 @@ endif()
 
 target_include_directories(rt_daq PUBLIC include/)
 
+###########
+# RT SPSC #
+###########
+
+add_library(rt_spsc
+            STATIC src/rt_spsc/spsc_command.c
+                   src/rt_spsc/spsc_telemetry.c)
+ 
+target_include_directories(rt_spsc PUBLIC include/)
+
+
 #############
 #   Main    #
 #############
@@ -104,6 +115,9 @@ target_link_libraries(c_rt_comunication
 
 target_link_libraries(c_rt_comunication 
                       PUBLIC rt_daq)
+
+target_link_libraries(c_rt_comunication 
+                      PUBLIC rt_spsc)
 
 target_sources(c_rt_comunication
   PRIVATE
