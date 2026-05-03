@@ -106,8 +106,9 @@ target_include_directories(rt_spsc PUBLIC include/)
 #############
 
 add_library(rt_plugin
-            STATIC src/rt_plugin/abi/result.c)
-
+            STATIC src/rt_plugin/abi/result.c
+                   src/rt_plugin/plugin.c)
+ 
 target_include_directories(rt_plugin PUBLIC include/)
 
 #############
