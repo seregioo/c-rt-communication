@@ -102,6 +102,15 @@ target_include_directories(rt_spsc PUBLIC include/)
 
 
 #############
+# RT Plugin #
+#############
+
+add_library(rt_plugin
+            STATIC src/rt_plugin/abi/result.c)
+
+target_include_directories(rt_plugin PUBLIC include/)
+
+#############
 #   Main    #
 #############
 
@@ -118,6 +127,9 @@ target_link_libraries(c_rt_comunication
 
 target_link_libraries(c_rt_comunication 
                       PUBLIC rt_spsc)
+
+target_link_libraries(c_rt_comunication 
+                      PUBLIC rt_plugin)
 
 target_sources(c_rt_comunication
   PRIVATE
